@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Creative Portfolio - Showcasing innovative digital experiences through code, design, and creativity." />
+    <meta name="keywords" content="portfolio, web development, design, creative, projects, frontend, fullstack" />
+    <meta name="author" content="Portfolio Owner" />
+    
+    <title>Creative Portfolio - Digital Experiences & Innovation</title>
+    
+    <!-- Preconnect to CDN domains for better performance -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    
+    <!-- Primary Tailwind CSS CDN (Latest v3.x) -->
+    <link 
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.0/dist/tailwind.min.css" 
+      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet'"
+      onerror="this.onerror=null;this.rel='stylesheet';this.href='https://unpkg.com/tailwindcss@3.4.0/dist/tailwind.min.css'"
+    >
+    
+    <!-- Backup CDN #1 - unpkg -->
+    <link 
+      href="https://unpkg.com/tailwindcss@3.4.0/dist/tailwind.min.css" 
+      rel="preload" 
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+      onerror="this.onerror=null;this.rel='stylesheet';this.href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.4.0/tailwind.min.css'"
+    >
+    
+    <!-- Backup CDN #2 - Cloudflare -->
+    <link 
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.4.0/tailwind.min.css" 
+      rel="preload" 
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+      onerror="this.onerror=null;this.rel='stylesheet';this.href='https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css'"
+    >
+    
+    <!-- Backup CDN #3 - jsDelivr v2 (Stable fallback) -->
+    <link 
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" 
+      rel="preload" 
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    >
+    
+    <!-- Additional utility libraries for enhanced styling -->
+    <!-- Tailwind Typography for better text rendering -->
+    <link 
+      href="https://cdn.jsdelivr.net/npm/@tailwindcss/typography@0.5.10/dist/typography.min.css" 
+      rel="stylesheet"
+      onerror="console.warn('Tailwind Typography CDN failed to load')"
+    >
+    
+    <!-- Tailwind Forms for better form styling -->
+    <link 
+      href="https://cdn.jsdelivr.net/npm/@tailwindcss/forms@0.5.7/dist/forms.min.css" 
+      rel="stylesheet"
+      onerror="console.warn('Tailwind Forms CDN failed to load')"
+    >
+    
+    <!-- Animate.css for additional animations (backup for custom animations) -->
+    <link 
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      rel="stylesheet"
+      onerror="console.warn('Animate.css CDN failed to load')"
+    >
+    
+    <!-- Google Fonts for typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" 
+      rel="stylesheet"
+      onerror="console.warn('Google Fonts CDN failed to load')"
+    >
+    
+    <!-- Devicons for technology/skill icons -->
+    <link 
+      rel="stylesheet" 
+      type="text/css" 
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+      onerror="console.warn('Devicons CDN failed to load')"
+    />
+    
+    <!-- Simple Icons as backup for additional technology icons -->
+    <link 
+      rel="stylesheet" 
+      href="https://cdn.jsdelivr.net/npm/simple-icons@v10/icons/icons.css"
+      onerror="console.warn('Simple Icons CDN failed to load')"
+    />
+    
+    <!-- Favicon and app icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Inline critical CSS for immediate rendering -->
+    <style>
+      /* Critical CSS for immediate rendering */
+      body {
+        font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      
+      /* Loading spinner styles */
+      .loading-spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(59, 130, 246, 0.3);
+        border-radius: 50%;
+        border-top-color: #3b82f6;
+        animation: spin 1s ease-in-out infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      /* Fallback styles if Tailwind fails to load */
+      .fallback-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: 'Inter', 'Roboto', sans-serif;
+      }
+      
+      .fallback-btn {
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: transform 0.2s ease;
+      }
+      
+      .fallback-btn:hover {
+        transform: translateY(-2px);
+      }
+    </style>
+    
+    <!-- Dark theme detection script -->
+    <script>
+      // Set initial dark theme
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+    
+    <!-- Script to detect Tailwind loading and provide fallback -->
+    <script>
+      // Check if Tailwind CSS loaded successfully
+      function checkTailwindLoaded() {
+        const testElement = document.createElement('div');
+        testElement.className = 'hidden';
+        document.body.appendChild(testElement);
+        
+        const isHidden = window.getComputedStyle(testElement).display === 'none';
+        document.body.removeChild(testElement);
+        
+        if (!isHidden) {
+          console.warn('Tailwind CSS failed to load, applying fallback styles');
+          document.body.classList.add('tailwind-fallback');
+        } else {
+          console.log('Tailwind CSS loaded successfully');
+        }
+      }
+      
+      // Run check after DOM loads
+      document.addEventListener('DOMContentLoaded', checkTailwindLoaded);
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <div style="text-align: center; padding: 40px; font-family: Arial, sans-serif;">
+        <h1>JavaScript Required</h1>
+        <p>You need to enable JavaScript to run this portfolio application.</p>
+        <p>Please enable JavaScript in your browser settings and refresh the page.</p>
+      </div>
+    </noscript>
+    
+    <!-- Loading indicator -->
+    <div id="loading-indicator" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+      <div class="loading-spinner"></div>
+      <p style="margin-top: 10px; text-align: center; color: #6b7280;">Loading Portfolio...</p>
+    </div>
+    
+    <div id="root"></div>
+    
+    <!-- Remove loading indicator when app loads -->
+    <script>
+      window.addEventListener('load', function() {
+        const loadingIndicator = document.getElementById('loading-indicator');
+        if (loadingIndicator) {
+          loadingIndicator.style.display = 'none';
+        }
+      });
+    </script>
+  </body>
+</html>
