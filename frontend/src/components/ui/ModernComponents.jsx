@@ -307,11 +307,11 @@ export const DarkHeader = ({
           {subtitle}
         </Badge>
       )}
-      <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 tracking-tight">
+      <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-200 dark:text-white mb-6 tracking-tight">
         {title}
       </h2>
       {description && (
-        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
           {description}
         </p>
       )}

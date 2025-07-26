@@ -10,7 +10,6 @@ import TextScroll from '../components/ui/TextScroll';
 import SkillsShowcase from '../components/ui/SkillsShowcase';
 import { FlipLink } from '../components/ui/TextEffectFlipper';
 import { ModernButton, ModernCard, Badge } from '../components/ui/ModernComponents';
-import { ImageRippleDemo } from '../components/ui/ImageRippleDemo';
 
 const PortfolioViewer = () => {
   const { projects, fetchProjects } = useProjects();
@@ -131,13 +130,13 @@ const PortfolioViewer = () => {
           </div>
         </div>
         
-        <ImageRippleDemo
+        <ImageCursorTrail
           images={cursorTrailImages}
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center min-h-screen flex items-center justify-center"
-          rippleColor="rgba(59, 130, 246, 0.8)"
-          rippleSize={150}
-          rippleDuration={1500}
-          maxRipples={10}
+          trailColor="rgba(59, 130, 246, 0.8)"
+          trailSize={150}
+          trailDuration={1500}
+          maxTrails={10}
         >
           <div className="relative z-10">
             <TextScroll direction="up" duration={1} delay={0.2}>
@@ -188,7 +187,7 @@ const PortfolioViewer = () => {
               </div>
             </TextScroll>
           </div>
-        </ImageRippleDemo>
+        </ImageCursorTrail>
         
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
@@ -293,14 +292,7 @@ const PortfolioViewer = () => {
       </section>
 
       {/* Featured Projects Section - Dark HeroUI Theme */}
-      <ImageRippleDemo
-        images={cursorTrailImages}
-        className="py-24 bg-black relative overflow-hidden"
-        rippleColor="rgba(99, 102, 241, 0.7)"
-        rippleSize={120}
-        rippleDuration={1200}
-        maxRipples={8}
-      >
+      <section className="py-24 bg-black relative overflow-hidden">
         {/* HeroUI-inspired dark background elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-600/8 to-purple-600/8 rounded-full blur-3xl animate-pulse"></div>
@@ -430,17 +422,10 @@ const PortfolioViewer = () => {
             </div>
           </TextScroll>
         </div>
-      </ImageRippleDemo>
+      </section>
 
       {/* Gallery Preview with Enhanced Dark Cards */}
-      <ImageRippleDemo
-        images={galleryImages}
-        className="py-24 bg-gradient-to-br from-gray-950 via-slate-900 to-black relative overflow-hidden"
-        rippleColor="rgba(16, 185, 129, 0.7)"
-        rippleSize={100}
-        rippleDuration={1000}
-        maxRipples={6}
-      >
+      <section className="py-24 bg-gradient-to-br from-gray-950 via-slate-900 to-black relative overflow-hidden">
         {/* Enhanced dark background elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-l from-purple-500/15 to-transparent rounded-full blur-3xl animate-pulse delay-500"></div>
@@ -478,46 +463,133 @@ const PortfolioViewer = () => {
           
           <div className="grid gap-12 lg:grid-cols-2 items-center">
             <TextScroll direction="left" duration={0.8} delay={0.2}>
-              <div className="relative bg-gray-900/70 backdrop-blur-xl rounded-3xl p-10 shadow-2xl border border-gray-700/40 hover:border-emerald-500/40 transition-all duration-500 group">
+              <section className="relative mx-auto w-full rounded-[24px] border border-emerald-500/20 p-8 shadow-xl bg-gray-900/70 backdrop-blur-xl md:rounded-[32px] overflow-hidden">
                 {/* Enhanced glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/8 to-cyan-600/8 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/8 to-cyan-600/8 rounded-[24px] md:rounded-[32px] opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                 
-                {/* Animated border */}
-                <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-cyan-500/20 p-[1px]">
-                    <div className="w-full h-full rounded-3xl bg-transparent"></div>
+                {/* Floating particles */}
+                <div className="absolute top-4 right-4 w-2 h-2 bg-emerald-400/60 rounded-full animate-ping"></div>
+                <div className="absolute top-8 right-8 w-1 h-1 bg-cyan-400/60 rounded-full animate-ping delay-500"></div>
+                <div className="absolute bottom-8 left-4 w-1.5 h-1.5 bg-teal-400/60 rounded-full animate-ping delay-1000"></div>
+
+                <article className="flex flex-col items-center justify-center mb-8">
+                  <div className="mb-6 inline-flex items-center gap-3 rounded-[14px] border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 backdrop-blur-xl">
+                    <svg className="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    <span className="text-emerald-300 font-semibold text-sm">Creative Gallery</span>
                   </div>
-                </div>
-                
-                <div className="relative z-10">
-                  <div className="mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-2xl flex items-center justify-center mb-4 border border-emerald-500/30">
-                      <svg className="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                  </div>
-                  
-                  <p className="text-lg text-gray-300 leading-relaxed mb-8">
-                    Each piece in my gallery represents a unique story, capturing moments of 
-                    inspiration and creativity. From digital art to photography, explore the 
-                    visual elements that drive innovation in my projects.
+                  <h3 className="text-3xl font-bold text-white text-center mb-4">
+                    <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
+                      Visual Storytelling
+                    </span>
+                  </h3>
+                  <p className="text-emerald-300/80 text-center text-sm font-medium">
+                    Where art meets innovation
                   </p>
-                  
-                  <a 
-                    href="/images"
-                    className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-600/20 to-teal-600/20 backdrop-blur-xl text-emerald-300 border border-emerald-500/30 rounded-2xl hover:bg-emerald-600/30 hover:border-emerald-400/50 hover:text-emerald-200 transition-all duration-300 font-semibold shadow-lg shadow-emerald-500/10 group-hover:shadow-emerald-500/20 transform hover:scale-105"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    Explore Full Gallery
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
+                </article>
+
+                <section className="space-y-8">
+                  <div className="text-center space-y-4">
+                    <p className="text-lg text-gray-300 leading-relaxed">
+                      Every piece tells a <span className="text-emerald-400 font-semibold">unique story</span>, 
+                      capturing moments of <span className="text-cyan-400 font-semibold">inspiration</span>
+                    </p>
+                    <p className="text-base text-gray-400 leading-relaxed">
+                      From digital art to photography, discover the visual elements that fuel innovation
+                    </p>
+                  </div>
+
+                  {/* Gallery Links Section */}
+                  <section className="grid place-content-center gap-6 py-8">
+                    {/* Digital Art */}
+                    <div className="group flex items-center justify-center gap-4">
+                      <div className="w-12 h-12 rounded-[12px] bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 flex items-center justify-center group-hover:scale-110 transition-all duration-300 group-hover:bg-emerald-500/30">
+                        <svg className="w-6 h-6 text-emerald-400 group-hover:text-emerald-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2M7 4h10M7 4l-2 14h14l-2-14M11 9h2M9 13h6" />
+                        </svg>
+                      </div>
+                      <FlipLink 
+                        href="/images?category=digital-art" 
+                        className="text-emerald-300 hover:text-emerald-200 text-lg font-semibold"
+                      >
+                        Digital Art
+                      </FlipLink>
+                    </div>
+
+                    {/* Photography */}
+                    <div className="group flex items-center justify-center gap-4">
+                      <FlipLink 
+                        href="/images?category=photography" 
+                        className="text-cyan-300 hover:text-cyan-200 text-lg font-semibold"
+                      >
+                        Photography
+                      </FlipLink>
+                      <div className="w-12 h-12 rounded-[12px] bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center group-hover:scale-110 transition-all duration-300 group-hover:bg-cyan-500/30">
+                        <svg className="w-6 h-6 text-cyan-400 group-hover:text-cyan-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                      </div>
+                    </div>
+
+                    {/* Creative Design */}
+                    <div className="group flex items-center justify-center gap-4">
+                      <div className="w-12 h-12 rounded-[12px] bg-gradient-to-br from-teal-500/20 to-emerald-500/20 border border-teal-500/30 flex items-center justify-center group-hover:scale-110 transition-all duration-300 group-hover:bg-teal-500/30">
+                        <svg className="w-6 h-6 text-teal-400 group-hover:text-teal-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                        </svg>
+                      </div>
+                      <FlipLink 
+                        href="/images?category=design" 
+                        className="text-teal-300 hover:text-teal-200 text-lg font-semibold"
+                      >
+                        Creative Design
+                      </FlipLink>
+                    </div>
+
+                    {/* Visual Concepts */}
+                    <div className="group flex items-center justify-center gap-4">
+                      <FlipLink 
+                        href="/images?category=concepts" 
+                        className="text-purple-300 hover:text-purple-200 text-lg font-semibold"
+                      >
+                        Visual Concepts
+                      </FlipLink>
+                      <div className="w-12 h-12 rounded-[12px] bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 flex items-center justify-center group-hover:scale-110 transition-all duration-300 group-hover:bg-purple-500/30">
+                        <svg className="w-6 h-6 text-purple-400 group-hover:text-purple-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Main CTA */}
+                  <div className="text-center pt-6 border-t border-emerald-500/20">
+                    <div className="group inline-flex items-center gap-4">
+                      <div className="w-14 h-14 rounded-[16px] bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 border border-emerald-500/30 flex items-center justify-center group-hover:scale-110 transition-all duration-300 group-hover:bg-emerald-500/30 group-hover:shadow-lg group-hover:shadow-emerald-500/20">
+                        <svg className="w-7 h-7 text-emerald-400 group-hover:text-emerald-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <FlipLink 
+                        href="/images" 
+                        className="text-2xl font-bold text-emerald-300 hover:text-emerald-200"
+                      >
+                        Explore Full Gallery
+                      </FlipLink>
+                      <div className="w-6 h-6 flex items-center justify-center">
+                        <svg className="w-5 h-5 text-emerald-400 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </div>
+                    </div>
+                    <p className="text-emerald-400/60 text-sm mt-2 font-medium">
+                      Discover visual stories
+                    </p>
+                  </div>
+                </section>
+              </section>
             </TextScroll>
             
             <TextScroll direction="right" duration={0.8} delay={0.3}>
@@ -582,7 +654,7 @@ const PortfolioViewer = () => {
             </TextScroll>
           </div>
         </div>
-      </ImageRippleDemo>
+      </section>
 
       {/* Call to Action with Enhanced Dark Styling */}
       <section className="py-24 bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 relative overflow-hidden">

@@ -104,7 +104,7 @@ const AdminDashboard = () => {
                   className={`flex-1 py-4 px-6 text-sm font-semibold rounded-xl transition-all duration-300 ${
                     activeTab === tab.id
                       ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      : 'text-gray-300 hover:text-white hover:bg-gray-700'
                   }`}
                 >
                   <span className="flex items-center justify-center">
@@ -123,8 +123,8 @@ const AdminDashboard = () => {
             {/* Quick Actions */}
             <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-gray-200/50 p-8">
               <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Quick Actions</h2>
-                <p className="text-gray-600">Manage your portfolio content</p>
+                <h2 className="text-2xl font-bold text-gray-200 mb-2">Quick Actions</h2>
+                <p className="text-gray-300">Manage your portfolio content</p>
               </div>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <a

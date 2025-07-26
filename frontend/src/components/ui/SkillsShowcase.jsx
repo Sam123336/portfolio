@@ -132,43 +132,64 @@ const SkillsShowcase = () => {
                   return (
                     <div
                       key={skill._id}
-                      className="group relative bg-gray-900/60 backdrop-blur-xl rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:shadow-blue-500/10 border border-gray-700/30 hover:border-blue-500/30 transition-all duration-500 hover:transform hover:scale-105"
+                      className="group relative bg-gray-900/60 backdrop-blur-xl rounded-2xl p-6 shadow-lg hover:shadow-2xl border border-gray-700/30 transition-all duration-500 hover:transform hover:scale-105 skill-card-glow"
                       style={{
                         animationDelay: `${categoryIndex * 200 + index * 100}ms`,
                       }}
                     >
-                      {/* Skill Icon */}
-                      <div className="flex justify-center mb-4">
-                        <div className="relative">
-                          <div className="w-16 h-16 bg-gradient-to-br from-gray-800/80 to-gray-700/80 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-inner border border-gray-600/30">
-                            <SkillIcon iconData={iconData} size="w-8 h-8" />
-                          </div>
-                          {/* Proficiency indicator */}
-                          <div className={`absolute -bottom-1 -right-1 w-6 h-6 bg-gradient-to-r ${getProficiencyColor(skill.proficiency)} rounded-full border-2 border-gray-900 flex items-center justify-center shadow-lg`}>
-                            <div className="w-2 h-2 bg-white rounded-full"></div>
+                      {/* Base glow effect */}
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-cyan-500/20 opacity-40 blur-xl transition-all duration-500 group-hover:opacity-80 group-hover:blur-2xl"></div>
+                      
+                      {/* Enhanced glow on hover */}
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-cyan-400/30 opacity-0 blur-2xl transition-all duration-500 group-hover:opacity-100 group-hover:blur-3xl group-hover:scale-110"></div>
+                      
+                      {/* Card content container */}
+                      <div className="relative z-10">
+                        {/* Skill Icon */}
+                        <div className="flex justify-center mb-4">
+                          <div className="relative">
+                            <div className="w-16 h-16 bg-gradient-to-br from-gray-800/80 to-gray-700/80 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-inner border border-gray-600/30 skill-icon-glow skill-icon-container">
+                              {/* Icon glow background */}
+                              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-cyan-500/20 blur-lg opacity-60 group-hover:opacity-100 group-hover:blur-xl transition-all duration-500"></div>
+                              
+                              {/* Enhanced icon glow on hover */}
+                              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-cyan-400/30 opacity-0 blur-xl group-hover:opacity-100 group-hover:blur-2xl group-hover:scale-125 transition-all duration-500"></div>
+                              
+                              {/* Icon content with enhanced glow */}
+                              <div className="relative z-10 skill-icon-wrapper">
+                                <SkillIcon iconData={iconData} size="w-8 h-8" />
+                              </div>
+                            </div>
+                            {/* Proficiency indicator with glow */}
+                            <div className={`absolute -bottom-1 -right-1 w-6 h-6 bg-gradient-to-r ${getProficiencyColor(skill.proficiency)} rounded-full border-2 border-gray-900 flex items-center justify-center shadow-lg proficiency-glow`}>
+                              <div className="w-2 h-2 bg-white rounded-full"></div>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Skill Name */}
-                      <div className="text-center">
-                        <h4 className="font-bold text-white text-sm mb-1 group-hover:text-cyan-400 transition-colors duration-300">
-                          {skill.name}
-                        </h4>
-                        <p className="text-xs text-gray-400 font-medium">
-                          {skill.proficiency}
-                        </p>
+                        {/* Skill Name */}
+                        <div className="text-center">
+                          <h4 className="font-bold text-white text-sm mb-1 group-hover:text-cyan-400 transition-colors duration-300 group-hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]">
+                            {skill.name}
+                          </h4>
+                          <p className="text-xs text-gray-400 font-medium group-hover:text-gray-300 transition-colors duration-300">
+                            {skill.proficiency}
+                          </p>
+                        </div>
                       </div>
 
                       {/* Hover effect overlay */}
                       <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-purple-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
 
-                      {/* Animated border */}
+                      {/* Animated border with glow */}
                       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-cyan-500/30 p-[1px]">
+                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-cyan-500/30 p-[1px] shadow-[0_0_20px_rgba(59,130,246,0.5)]">
                           <div className="w-full h-full rounded-2xl bg-gray-900/80"></div>
                         </div>
                       </div>
+                      
+                      {/* Pulse effect on hover */}
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-400/10 via-purple-400/10 to-cyan-400/10 opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500"></div>
                     </div>
                   );
                 })}
@@ -192,6 +213,137 @@ const SkillsShowcase = () => {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .skill-card-glow {
+          box-shadow: 
+            0 4px 20px rgba(59, 130, 246, 0.15),
+            0 0 40px rgba(168, 85, 247, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .skill-card-glow:hover {
+          box-shadow: 
+            0 8px 40px rgba(59, 130, 246, 0.4),
+            0 0 80px rgba(168, 85, 247, 0.3),
+            0 0 120px rgba(34, 211, 238, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+          transform: scale(1.05) translateY(-2px);
+        }
+        
+        .skill-icon-glow {
+          box-shadow: 
+            0 0 20px rgba(59, 130, 246, 0.3),
+            0 0 30px rgba(168, 85, 247, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .skill-icon-container {
+          position: relative;
+          overflow: visible;
+        }
+        
+        .skill-icon-container:hover .skill-icon-glow {
+          box-shadow: 
+            0 0 40px rgba(59, 130, 246, 0.6),
+            0 0 60px rgba(168, 85, 247, 0.5),
+            0 0 80px rgba(34, 211, 238, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .skill-icon-wrapper {
+          filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4));
+          transition: all 0.3s ease;
+        }
+        
+        .group:hover .skill-icon-wrapper {
+          filter: 
+            drop-shadow(0 0 12px rgba(59, 130, 246, 0.8))
+            drop-shadow(0 0 20px rgba(168, 85, 247, 0.6))
+            drop-shadow(0 0 30px rgba(34, 211, 238, 0.4));
+          transform: scale(1.1);
+        }
+        
+        .proficiency-glow {
+          box-shadow: 
+            0 0 15px rgba(59, 130, 246, 0.4),
+            0 2px 8px rgba(0, 0, 0, 0.3);
+          transition: all 0.3s ease;
+        }
+        
+        .group:hover .proficiency-glow {
+          box-shadow: 
+            0 0 25px rgba(59, 130, 246, 0.8),
+            0 0 40px rgba(168, 85, 247, 0.6),
+            0 0 50px rgba(34, 211, 238, 0.4),
+            0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes icon-glow-pulse {
+          0%, 100% {
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.3));
+          }
+          50% {
+            filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.5));
+          }
+        }
+        
+        .skill-icon-wrapper {
+          animation: icon-glow-pulse 2.5s ease-in-out infinite;
+        }
+        
+        .group:hover .skill-icon-wrapper {
+          animation: none;
+        }
+        
+        @keyframes glow-pulse {
+          0%, 100% {
+            box-shadow: 
+              0 4px 20px rgba(59, 130, 246, 0.15),
+              0 0 40px rgba(168, 85, 247, 0.1);
+          }
+          50% {
+            box-shadow: 
+              0 6px 30px rgba(59, 130, 246, 0.25),
+              0 0 60px rgba(168, 85, 247, 0.2);
+          }
+        }
+        
+        .skill-card-glow {
+          animation: glow-pulse 3s ease-in-out infinite;
+        }
+        
+        .skill-card-glow:hover {
+          animation: none;
+        }
+        
+        /* Enhanced icon container glow */
+        .skill-icon-container::before {
+          content: '';
+          position: absolute;
+          inset: -4px;
+          background: conic-gradient(
+            from 0deg,
+            rgba(59, 130, 246, 0.4),
+            rgba(168, 85, 247, 0.4),
+            rgba(34, 211, 238, 0.4),
+            rgba(59, 130, 246, 0.4)
+          );
+          border-radius: 1rem;
+          opacity: 0;
+          filter: blur(8px);
+          transition: all 0.5s ease;
+          z-index: -1;
+        }
+        
+        .group:hover .skill-icon-container::before {
+          opacity: 0.8;
+          filter: blur(12px);
+          transform: scale(1.2);
+        }
+      `}</style>
     </section>
   );
 };

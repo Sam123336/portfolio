@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useProjects } from '../hooks/useProjects';
 import { useAuth } from '../hooks/useAuth';
 import { ModernButton, ModernCard, Badge } from '../components/ui/ModernComponents';
-import { ImageRippleDemo } from '../components/ui/ImageRippleDemo';
 import { useImages } from '../hooks/useImages';
 
 const Projects = () => {
@@ -48,21 +47,6 @@ const Projects = () => {
     }
   };
 
-  // Get background images for ripple effect
-  const rippleImages = React.useMemo(() => {
-    if (images && Array.isArray(images) && images.length > 0) {
-      return images.slice(0, 6).map(img => img.url);
-    }
-    return [
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400",
-      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400",
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400",
-      "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=400",
-      "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?w=400",
-      "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400"
-    ];
-  }, [images]);
-
   // Get all unique skills for filtering
   const allSkills = [...new Set(projects.flatMap(p => p.skills || []))];
   
@@ -72,14 +56,7 @@ const Projects = () => {
     : projects.filter(p => p.skills?.includes(filter));
 
   return (
-    <ImageRippleDemo
-      images={rippleImages}
-      className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-950 dark:via-slate-900 dark:to-indigo-950"
-      rippleColor="rgba(59, 130, 246, 0.6)"
-      rippleSize={100}
-      rippleDuration={1000}
-      maxRipples={6}
-    >
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-slate-900 to-indigo-950">
       <div className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Enhanced Header */}
@@ -89,11 +66,11 @@ const Projects = () => {
                 🚀 My Work
               </Badge>
               <h1 className="text-5xl sm:text-6xl font-bold">
-                <span className="bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
                   Featured Projects
                 </span>
               </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
                 Explore my portfolio of innovative web applications, creative solutions, and cutting-edge technical implementations
               </p>
             </div>
@@ -126,7 +103,7 @@ const Projects = () => {
               {showForm && (
                 <form onSubmit={handleSubmit} className="grid gap-8 md:grid-cols-2">
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3">Project Title</label>
+                    <label className="block text-sm font-semibold text-gray-300 dark:text-gray-200 mb-3">Project Title</label>
                     <input 
                       name="title" 
                       value={form.title} 
@@ -138,7 +115,7 @@ const Projects = () => {
                   </div>
                   
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3">Description</label>
+                    <label className="block text-sm font-semibold text-gray-300 dark:text-gray-200 mb-3">Description</label>
                     <textarea 
                       name="description" 
                       value={form.description} 
@@ -151,7 +128,7 @@ const Projects = () => {
                   </div>
                   
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3">Project Thumbnail</label>
+                    <label className="block text-sm font-semibold text-gray-300 dark:text-gray-200 mb-3">Project Thumbnail</label>
                     <div className="flex items-center justify-center w-full">
                       <label className="group flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl cursor-pointer bg-gray-50/50 dark:bg-gray-800/50 hover:bg-gray-100/50 dark:hover:bg-gray-700/50 transition-all duration-300">
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -174,7 +151,7 @@ const Projects = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3">Technologies & Skills</label>
+                    <label className="block text-sm font-semibold text-gray-300 dark:text-gray-200 mb-3">Technologies & Skills</label>
                     <input 
                       name="skills" 
                       value={form.skills} 
@@ -185,7 +162,7 @@ const Projects = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3">Live Demo URL</label>
+                    <label className="block text-sm font-semibold text-gray-300 dark:text-gray-200 mb-3">Live Demo URL</label>
                     <input 
                       name="liveLink" 
                       value={form.liveLink} 
@@ -196,7 +173,7 @@ const Projects = () => {
                   </div>
                   
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3">GitHub Repository</label>
+                    <label className="block text-sm font-semibold text-gray-300 dark:text-gray-200 mb-3">GitHub Repository</label>
                     <input 
                       name="githubLink" 
                       value={form.githubLink} 
@@ -344,7 +321,7 @@ const Projects = () => {
           )}
         </div>
       </div>
-    </ImageRippleDemo>
+    </div>
   );
 };
 

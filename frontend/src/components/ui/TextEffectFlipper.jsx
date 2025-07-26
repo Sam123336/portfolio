@@ -19,7 +19,7 @@ const FlipLink = ({
       rel={rel}
       className={clsx(
         "relative inline-block overflow-hidden font-semibold transition-colors duration-300",
-        "text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400",
+        "text-gray-300 dark:text-white hover:text-blue-400 dark:hover:text-blue-400",
         className
       )}
       onMouseEnter={() => setIsHovered(true)}

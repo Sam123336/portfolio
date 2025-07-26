@@ -29,7 +29,7 @@ const Contact = () => {
                 Let's Collaborate
               </span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
               Have an exciting project in mind? I'd love to hear about it and explore how we can bring your vision to life together.
             </p>
           </div>
@@ -40,7 +40,7 @@ const Contact = () => {
           <div className="space-y-8">
             <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-gray-200/50 p-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Why Work With Me?</h2>
-              <p className="text-gray-600 mb-8 leading-relaxed">
+              <p className="text-gray-300 mb-8 leading-relaxed">
                 I'm passionate about creating digital experiences that make a difference. 
                 Whether you're a startup looking to build your first product or an established 
                 company seeking to innovate, I bring creativity, technical expertise, and 
@@ -55,8 +55,8 @@ const Contact = () => {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Fast Turnaround</h3>
-                    <p className="text-gray-600 text-sm">Efficient development process with regular updates and milestones</p>
+                    <h3 className="font-bold text-gray-200 mb-1">Fast Turnaround</h3>
+                    <p className="text-gray-300 text-sm">Efficient development process with regular updates and milestones</p>
                   </div>
                 </div>
 
@@ -67,8 +67,8 @@ const Contact = () => {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Quality Assurance</h3>
-                    <p className="text-gray-600 text-sm">Rigorous testing and attention to detail in every deliverable</p>
+                    <h3 className="font-bold text-gray-200 mb-1">Quality Assurance</h3>
+                    <p className="text-gray-300 text-sm">Rigorous testing and attention to detail in every deliverable</p>
                   </div>
                 </div>
 
@@ -79,8 +79,8 @@ const Contact = () => {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Clear Communication</h3>
-                    <p className="text-gray-600 text-sm">Regular updates and transparent project management</p>
+                    <h3 className="font-bold text-gray-200 mb-1">Clear Communication</h3>
+                    <p className="text-gray-300 text-sm">Regular updates and transparent project management</p>
                   </div>
                 </div>
               </div>
@@ -96,8 +96,8 @@ const Contact = () => {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-900 text-lg">Email</h3>
-                    <p className="text-gray-600">your.email@example.com</p>
+                    <h3 className="font-bold text-gray-200 text-lg">Email</h3>
+                    <p className="text-gray-300">your.email@example.com</p>
                   </div>
                 </div>
               </div>
@@ -111,8 +111,8 @@ const Contact = () => {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-900 text-lg">Location</h3>
-                    <p className="text-gray-600">Available worldwide (Remote)</p>
+                    <h3 className="font-bold text-gray-200 text-lg">Location</h3>
+                    <p className="text-gray-300">Available worldwide (Remote)</p>
                   </div>
                 </div>
               </div>
@@ -125,8 +125,8 @@ const Contact = () => {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-bold text-gray-900 text-lg">Response Time</h3>
-                    <p className="text-gray-600">Usually within 24 hours</p>
+                    <h3 className="font-bold text-gray-200 text-lg">Response Time</h3>
+                    <p className="text-gray-300">Usually within 24 hours</p>
                   </div>
                 </div>
               </div>
@@ -134,7 +134,7 @@ const Contact = () => {
 
             {/* Social Links */}
             <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-gray-200/50 p-6">
-              <h3 className="font-bold text-gray-900 text-lg mb-4">Connect With Me</h3>
+              <h3 className="font-bold text-gray-200 text-lg mb-4">Connect With Me</h3>
               <div className="flex space-x-4">
                 <a href="#" className="group w-12 h-12 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-xl flex items-center justify-center hover:from-gray-700 hover:to-gray-800 transition-all duration-300 transform hover:scale-110">
                   <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
@@ -158,8 +158,8 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-gray-200/50 p-8">
             <div className="mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Send a Message</h2>
-              <p className="text-gray-600">Tell me about your project and let's start building something amazing together</p>
+              <h2 className="text-3xl font-bold text-gray-200 mb-2">Send a Message</h2>
+              <p className="text-gray-300">Tell me about your project and let's start building something amazing together</p>
             </div>
             
             {sent && (
@@ -196,7 +196,7 @@ const Contact = () => {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-bold text-gray-800 mb-3">
+                <label className="block text-sm font-bold text-gray-300 mb-3">
                   Your Name
                 </label>
                 <input 
@@ -210,7 +210,7 @@ const Contact = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-bold text-gray-800 mb-3">
+                <label className="block text-sm font-bold text-gray-300 mb-3">
                   Email Address
                 </label>
                 <input 
@@ -225,7 +225,7 @@ const Contact = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-bold text-gray-800 mb-3">
+                <label className="block text-sm font-bold text-gray-300 mb-3">
                   Project Details
                 </label>
                 <textarea 
