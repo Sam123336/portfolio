@@ -2,8 +2,8 @@ import express from 'express';
 const router = express.Router();
 import multer from 'multer';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
-import {cloudinary} from '../utils/cloudinary.js';
-import {Image} from '../models/index.js';
+import { cloudinary, deleteImage } from '../utils/cloudinary.js';
+import { Image } from '../models/index.js';
 import { adminMiddleware } from '../middleware/auth.js';
 
 // Gallery Images Storage Configuration
@@ -303,24 +303,34 @@ router.delete('/:id', adminMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Image not found' });
     }
     
-    // Extract public ID from Cloudinary URL for deletion
-    const urlParts = image.url.split('/');
-    const publicIdWithExtension = urlParts[urlParts.length - 1];
-    const publicId = publicIdWithExtension.split('.')[0];
-    const folderPath = image.type === 'gallery' ? 'portfolio-gallery' : 
-                     image.type === 'project' ? 'portfolio-projects' : 'portfolio-profile';
-    const fullPublicId = `${folderPath}/${publicId}`;
+    console.log('Deleting image:', image.publicId);
     
-    // Delete from Cloudinary
-    await cloudinary.uploader.destroy(fullPublicId);
+    // Use the improved deleteImage function from cloudinary utils
+    try {
+      const deleteResult = await deleteImage(image.publicId);
+      console.log('Cloudinary delete successful:', deleteResult);
+      
+      if (deleteResult.warning) {
+        console.warn('Delete operation warning:', deleteResult.warning);
+      }
+    } catch (cloudinaryError) {
+      console.error('Cloudinary delete failed, but continuing with database deletion:', cloudinaryError);
+      // Continue with database deletion even if Cloudinary fails
+    }
     
     // Delete from database
     await Image.findByIdAndDelete(req.params.id);
     
-    res.json({ message: 'Image deleted successfully' });
+    res.json({ 
+      message: 'Image deleted successfully',
+      imageId: req.params.id
+    });
   } catch (err) {
     console.error('Error deleting image:', err);
-    res.status(500).json({ message: 'Failed to delete image', error: err?.message });
+    res.status(500).json({ 
+      message: 'Failed to delete image', 
+      error: err?.message || 'Unknown error occurred'
+    });
   }
 });
 

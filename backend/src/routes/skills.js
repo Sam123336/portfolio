@@ -66,8 +66,9 @@ router.post('/', adminMiddleware, async (req, res) => {
       return res.status(400).json({ message: 'Name, category, and proficiency are required' });
     }
 
-    // Check if skill already exists
-    const existingSkill = await Skill.findOne({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
+    // Check if skill already exists - escape special regex characters
+    const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const existingSkill = await Skill.findOne({ name: { $regex: new RegExp(`^${escapedName}$`, 'i') } });
     if (existingSkill) {
       return res.status(400).json({ message: 'Skill already exists' });
     }
@@ -102,8 +103,10 @@ router.put('/:id', adminMiddleware, async (req, res) => {
 
     // Check if another skill with the same name exists (case insensitive)
     if (name && name !== skill.name) {
+      // Escape special regex characters
+      const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const existingSkill = await Skill.findOne({ 
-        name: { $regex: new RegExp(`^${name}$`, 'i') },
+        name: { $regex: new RegExp(`^${escapedName}$`, 'i') },
         _id: { $ne: id }
       });
       if (existingSkill) {

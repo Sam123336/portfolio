@@ -22,11 +22,12 @@ export const ContinuousTextScroll = ({
     >
       <div
         ref={scrollRef}
-        className="inline-flex items-center gap-8 animate-scroll"
+        className="inline-flex items-center gap-8"
         style={{
           animationDirection: direction === "left" ? "normal" : "reverse",
           animationDuration: `${40 / default_velocity}s`,
-          animationPlayState: isPaused ? 'paused' : 'running'
+          animationPlayState: isPaused ? 'paused' : 'running',
+          animation: 'scroll linear infinite'
         }}
       >
         {/* Repeat text multiple times for continuous effect */}
@@ -37,7 +38,7 @@ export const ContinuousTextScroll = ({
         ))}
       </div>
       
-      <style jsx>{`
+      <style>{`
         @keyframes scroll {
           0% {
             transform: translateX(0);
@@ -45,10 +46,6 @@ export const ContinuousTextScroll = ({
           100% {
             transform: translateX(-100%);
           }
-        }
-        
-        .animate-scroll {
-          animation: scroll linear infinite;
         }
       `}</style>
     </div>
@@ -130,7 +127,7 @@ const TextScroll = ({
     >
       {children}
       
-      <style jsx>{`
+      <style>{`
         @keyframes slide-up-in {
           from {
             opacity: 0;

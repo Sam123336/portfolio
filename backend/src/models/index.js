@@ -62,8 +62,72 @@ const skillSchema = new mongoose.Schema({
   description: String // Optional description
 }, { timestamps: true });
 
+// Contact schema (for tracking contact attempts)
+const contactSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  message: { type: String, required: true },
+  status: { 
+    type: String, 
+    enum: ['new', 'read', 'replied'], 
+    default: 'new' 
+  },
+  ipAddress: String,
+  userAgent: String
+}, { timestamps: true });
+
+// Analytics schema for tracking user interactions
+const analyticsSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    required: true,
+    enum: ['page_view', 'project_click', 'contact_form_view', 'contact_form_submit', 'image_view', 'skill_view', 'external_link_click']
+  },
+  page: String, // which page was viewed
+  projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },
+  imageId: { type: mongoose.Schema.Types.ObjectId, ref: 'Image' },
+  skillId: { type: mongoose.Schema.Types.ObjectId, ref: 'Skill' },
+  metadata: {
+    userAgent: String,
+    ipAddress: String,
+    referrer: String,
+    sessionId: String,
+    duration: Number, // time spent on page/action
+    clickPosition: {
+      x: Number,
+      y: Number
+    },
+    deviceType: String, // mobile, tablet, desktop
+    country: String,
+    city: String
+  }
+}, { timestamps: true });
+
+// Visitor session schema for unique visitor tracking
+const visitorSessionSchema = new mongoose.Schema({
+  sessionId: { type: String, required: true, unique: true },
+  ipAddress: String,
+  userAgent: String,
+  firstVisit: { type: Date, default: Date.now },
+  lastActivity: { type: Date, default: Date.now },
+  pageViews: { type: Number, default: 1 },
+  isActive: { type: Boolean, default: true },
+  referrer: String,
+  country: String,
+  city: String,
+  deviceInfo: {
+    type: String,
+    browser: String,
+    os: String,
+    device: String
+  }
+}, { timestamps: true });
+
 export const User = mongoose.model('User', userSchema);
 export const Project = mongoose.model('Project', projectSchema);
 export const Image = mongoose.model('Image', imageSchema);
 export const Music = mongoose.model('Music', musicSchema);
 export const Skill = mongoose.model('Skill', skillSchema);
+export const Contact = mongoose.model('Contact', contactSchema);
+export const Analytics = mongoose.model('Analytics', analyticsSchema);
+export const VisitorSession = mongoose.model('VisitorSession', visitorSessionSchema);

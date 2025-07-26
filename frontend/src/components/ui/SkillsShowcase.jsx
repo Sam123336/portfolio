@@ -44,7 +44,7 @@ const SkillsShowcase = () => {
     if (iconData.type === 'devicon') {
       return (
         <i 
-          className={`${iconData.className} ${size} ${iconData.colored ? 'colored' : ''}`}
+          className={`${iconData.className} ${size} ${iconData.colored ? 'colored dark-devicon' : 'dark-devicon'}`}
           style={{ fontSize: size === 'w-6 h-6' ? '24px' : '32px' }}
         />
       );
@@ -342,6 +342,27 @@ const SkillsShowcase = () => {
           opacity: 0.8;
           filter: blur(12px);
           transform: scale(1.2);
+        }
+        
+        /* Dark theme styling for DevIcons */
+        .dark-devicon {
+          filter: brightness(0.8) contrast(1.2) saturate(0.7);
+          color: #e2e8f0 !important;
+          transition: all 0.3s ease;
+        }
+        
+        .group:hover .dark-devicon {
+          filter: brightness(1.1) contrast(1.3) saturate(0.9);
+          color: #94a3b8 !important;
+        }
+        
+        /* Specific styling for React logo to make it darker */
+        .devicon-react-original.dark-devicon {
+          filter: brightness(0.6) contrast(1.4) saturate(0.5) hue-rotate(180deg);
+        }
+        
+        .group:hover .devicon-react-original.dark-devicon {
+          filter: brightness(0.8) contrast(1.5) saturate(0.7) hue-rotate(180deg);
         }
       `}</style>
     </section>

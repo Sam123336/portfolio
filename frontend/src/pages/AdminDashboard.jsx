@@ -3,14 +3,25 @@ import { useAuth } from '../hooks/useAuth';
 import { useProjects } from '../hooks/useProjects';
 import { useMusic } from '../hooks/useMusic';
 import { useImages } from '../hooks/useImages';
+import { useAnalyticsDashboard } from '../hooks/useAnalytics';
 import { uploadProfilePicture, getProfilePicture } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
+import { LineChart, BarChart, DonutChart, ActivityFeed } from '../components/AnalyticsCharts';
 
 const AdminDashboard = () => {
   const { user, logout } = useAuth();
   const { projects, fetchProjects } = useProjects();
   const { musicList, fetchMusic, uploadMusic } = useMusic();
   const { images, fetchImages } = useImages();
+  const { 
+    data: analyticsData, 
+    loading: analyticsLoading, 
+    error: analyticsError,
+    realTimeData,
+    fetchDashboardData,
+    fetchRealTimeData,
+    updateContactStatus 
+  } = useAnalyticsDashboard();
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState('overview');
@@ -19,6 +30,7 @@ const AdminDashboard = () => {
   const [profilePicture, setProfilePicture] = useState(null);
   const [profileLoading, setProfileLoading] = useState(false);
   const [profileUploadStatus, setProfileUploadStatus] = useState('');
+  const [analyticsPeriod, setAnalyticsPeriod] = useState('7d');
 
   useEffect(() => {
     if (!user) {
@@ -29,6 +41,15 @@ const AdminDashboard = () => {
     fetchMusic();
     fetchImages();
   }, [user]);
+
+  // Auto-refresh real-time data every 30 seconds
+  useEffect(() => {
+    if (activeTab === 'analytics') {
+      fetchRealTimeData();
+      const interval = setInterval(fetchRealTimeData, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [activeTab, fetchRealTimeData]);
 
   const handleMusicUpload = async (e) => {
     e.preventDefault();

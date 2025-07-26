@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useProjects } from '../hooks/useProjects';
 import { useMusic } from '../hooks/useMusic';
 import { useImages } from '../hooks/useImages';
 import { getProfilePicture } from '../utils/api';
-import { Link } from 'react-router-dom';
+import { Badge } from '../components/ui/ModernComponents';
+import TextScroll from '../components/ui/TextScroll';
 import ImageCursorTrail from '../components/ui/ImageCursorTrail';
+import AnimatedText3D from '../components/ui/AnimatedText3D';
 import { CardCarousel } from '../components/ui/card-carousel';
-import TextScroll, { ContinuousTextScroll } from '../components/ui/TextScroll';
 import SkillsShowcase from '../components/ui/SkillsShowcase';
 import { FlipLink } from '../components/ui/TextEffectFlipper';
-import { ModernButton, ModernCard, Badge } from '../components/ui/ModernComponents';
+import { ModernButton, ModernCard } from '../components/ui/ModernComponents';
 
 const PortfolioViewer = () => {
   const { projects, fetchProjects } = useProjects();
@@ -202,6 +203,94 @@ const PortfolioViewer = () => {
       {/* Skills Showcase Section - Dark Theme */}
       <SkillsShowcase />
 
+      {/* 3D Animated Text Section */}
+      <section className="py-32 bg-gradient-to-br from-black via-gray-950 to-purple-950 relative overflow-hidden">
+        {/* Enhanced background effects */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-20 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-to-r from-yellow-500/8 to-orange-500/8 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <TextScroll direction="up" duration={0.8} delay={0.1}>
+            <div className="text-center mb-16">
+              <div className="inline-block px-6 py-3 bg-gradient-to-r from-purple-600/25 to-pink-600/25 backdrop-blur-xl rounded-full mb-6 border border-purple-500/30">
+                <span className="text-sm font-semibold text-purple-300 tracking-wide uppercase">
+                  ✨ What I Am
+                </span>
+              </div>
+              <h2 className="text-4xl sm:text-5xl font-bold mb-8">
+                <span className="bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
+                  My Identity in Motion
+                </span>
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-12">
+                Watch as my professional identity rotates through space, showcasing the many facets of what I bring to every project
+              </p>
+            </div>
+          </TextScroll>
+
+          <TextScroll direction="up" duration={1} delay={0.3}>
+            <div className="flex justify-center items-center min-h-[400px]">
+              <AnimatedText3D
+                words={['CREATIVE', 'DEVELOPER', 'DESIGNER', 'INNOVATOR', 'BUILDER', 'ARTIST', 'CODER', 'DREAMER']}
+                fontSize="4rem"
+                primaryColor="#a855f7"
+                secondColor="#ec4899"
+                className="w-full"
+              />
+            </div>
+          </TextScroll>
+
+          <TextScroll direction="up" duration={0.8} delay={0.5}>
+            <div className="text-center mt-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-purple-500/30 transition-all duration-300">
+                  <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-white font-bold text-lg mb-2">Creative</h3>
+                  <p className="text-gray-400 text-sm">Turning ideas into visual masterpieces</p>
+                </div>
+
+                <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-cyan-500/30 transition-all duration-300">
+                  <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                  </div>
+                  <h3 className="text-white font-bold text-lg mb-2">Developer</h3>
+                  <p className="text-gray-400 text-sm">Building robust, scalable solutions</p>
+                </div>
+
+                <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-yellow-500/30 transition-all duration-300">
+                  <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-white font-bold text-lg mb-2">Designer</h3>
+                  <p className="text-gray-400 text-sm">Crafting intuitive user experiences</p>
+                </div>
+
+                <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10 hover:border-emerald-500/30 transition-all duration-300">
+                  <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-white font-bold text-lg mb-2">Innovator</h3>
+                  <p className="text-gray-400 text-sm">Pushing boundaries with new tech</p>
+                </div>
+              </div>
+            </div>
+          </TextScroll>
+        </div>
+      </section>
+
       {/* Profile Section with Picture */}
       <section className="py-24 bg-gradient-to-br from-gray-950 via-gray-900 to-black relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
@@ -371,8 +460,14 @@ const PortfolioViewer = () => {
                     <div className="flex gap-4 pt-4 border-t border-gray-700/50">
                       {p.liveLink && (
                         <button 
-                          onClick={() => window.open(p.liveLink, '_blank')}
-                          className="flex items-center gap-2 px-4 py-2 bg-transparent text-gray-300 border border-gray-600/50 rounded-xl hover:bg-gray-800/50 hover:border-cyan-500/50 hover:text-cyan-400 transition-all duration-300 text-sm font-medium"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            console.log('Opening live link:', p.liveLink);
+                            window.open(p.liveLink, '_blank', 'noopener,noreferrer');
+                          }}
+                          className="flex items-center gap-2 px-4 py-2 bg-transparent text-gray-300 border border-gray-600/50 rounded-xl hover:bg-gray-800/50 hover:border-cyan-500/50 hover:text-cyan-400 transition-all duration-300 text-sm font-medium cursor-pointer z-10 relative"
+                          title={`Open ${p.title} live demo`}
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -382,8 +477,14 @@ const PortfolioViewer = () => {
                       )}
                       {p.githubLink && (
                         <button 
-                          onClick={() => window.open(p.githubLink, '_blank')}
-                          className="flex items-center gap-2 px-4 py-2 bg-transparent text-gray-300 border border-gray-600/50 rounded-xl hover:bg-gray-800/50 hover:border-purple-500/50 hover:text-purple-400 transition-all duration-300 text-sm font-medium"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            console.log('Opening GitHub link:', p.githubLink);
+                            window.open(p.githubLink, '_blank', 'noopener,noreferrer');
+                          }}
+                          className="flex items-center gap-2 px-4 py-2 bg-transparent text-gray-300 border border-gray-600/50 rounded-xl hover:bg-gray-800/50 hover:border-purple-500/50 hover:text-purple-400 transition-all duration-300 text-sm font-medium cursor-pointer z-10 relative"
+                          title={`View ${p.title} on GitHub`}
                         >
                           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>

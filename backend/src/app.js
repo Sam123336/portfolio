@@ -30,9 +30,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // MongoDB connection with updated options to fix deprecation warnings
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
+
+// Set mongoose options to avoid deprecation warnings
+mongoose.set('strictQuery', false);
 
 // Routes
 app.use('/api', routes);
