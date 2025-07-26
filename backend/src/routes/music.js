@@ -1,5 +1,5 @@
 import express from 'express';
-import { uploadMusic, getMusic, deleteMusic, getDefaultMusic } from '../controllers/musicController.js';
+import { uploadMusic, getMusic, deleteMusic, getDefaultMusic, setDefaultMusic } from '../controllers/musicController.js';
 import { adminMiddleware } from '../middleware/auth.js';
 import { musicUpload } from '../utils/uploaders.js';
 
@@ -13,6 +13,9 @@ router.post('/upload', adminMiddleware, musicUpload.single('musicFile'), uploadM
 
 // Route for admin to see all uploaded music tracks (for management)
 router.get('/', adminMiddleware, getMusic);
+
+// Route for admin to set a music track as default
+router.put('/default/:id', adminMiddleware, setDefaultMusic);
 
 // Route for admin to delete a music track
 router.delete('/:id', adminMiddleware, deleteMusic);

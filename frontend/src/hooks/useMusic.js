@@ -3,7 +3,8 @@ import axios from 'axios';
 import {
   getMusic,
   uploadMusic as uploadMusicApi,
-  deleteMusic as deleteMusicApi
+  deleteMusic as deleteMusicApi,
+  setDefaultMusic as setDefaultMusicApi
 } from '../utils/api';
 
 export const useMusic = () => {
@@ -38,5 +39,15 @@ export const useMusic = () => {
     setMusicList((prev) => prev.filter((m) => m._id !== id));
   };
 
-  return { musicList, loading, error, fetchMusic, uploadMusic, deleteMusic };
+  const setDefaultMusic = async (id) => {
+    const response = await setDefaultMusicApi(id);
+    // Update the music list to reflect the new default
+    setMusicList((prev) => prev.map((music) => ({
+      ...music,
+      isDefault: music._id === id
+    })));
+    return response;
+  };
+
+  return { musicList, loading, error, fetchMusic, uploadMusic, deleteMusic, setDefaultMusic };
 };

@@ -102,12 +102,28 @@ export const getMusic = async () => {
 };
 
 export const uploadMusic = async (musicData) => {
-  const response = await api.post('/music/upload', musicData);
+  // Create a config with extended timeout for music uploads
+  const uploadConfig = {
+    headers: { 'Content-Type': 'multipart/form-data' },
+    timeout: 120000, // 120 seconds for music uploads (larger files)
+    onUploadProgress: (progressEvent) => {
+      const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+      console.log(`Music upload progress: ${percentCompleted}%`);
+    }
+  };
+  
+  const response = await api.post('/music/upload', musicData, uploadConfig);
   return response.data.music;
 };
 
+export const setDefaultMusic = async (id) => {
+  const response = await api.put(`/music/default/${id}`);
+  return response.data;
+};
+
 export const deleteMusic = async (id) => {
-  await api.delete(`/music/${id}`);
+  const response = await api.delete(`/music/${id}`);
+  return response.data;
 };
 
 // IMAGES ENDPOINTS

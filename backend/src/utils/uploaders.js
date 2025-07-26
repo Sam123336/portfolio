@@ -26,8 +26,8 @@ const musicStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'portfolio/music',
-    allowed_formats: ['mp3', 'wav', 'flac', 'aac'],
-    resource_type: 'auto'
+    allowed_formats: ['mp3', 'wav', 'flac', 'aac', 'm4a', 'ogg'],
+    resource_type: 'video' // Use 'video' for audio files in Cloudinary
   },
 });
 

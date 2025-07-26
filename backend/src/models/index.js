@@ -41,7 +41,8 @@ const musicSchema = new mongoose.Schema({
   artist: { type: String, required: true },
   url: { type: String, required: true },
   publicId: { type: String, required: true },
-  duration: Number
+  duration: Number,
+  isDefault: { type: Boolean, default: false }
 }, { timestamps: true });
 
 // Skills schema
