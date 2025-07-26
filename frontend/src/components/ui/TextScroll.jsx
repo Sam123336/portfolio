@@ -1,18 +1,82 @@
+"use client"
+
 import React, { useRef, useEffect, useState } from 'react';
 import clsx from 'clsx';
 
-// Custom hook to detect when element is in view
-const useInView = (ref, options = {}) => {
+// Continuous scrolling text component (like the Skiper UI example)
+export const ContinuousTextScroll = ({ 
+  text,
+  className = "",
+  default_velocity = 5,
+  direction = "left", // "left" or "right"
+  pauseOnHover = true
+}) => {
+  const [isPaused, setIsPaused] = useState(false);
+  const scrollRef = useRef(null);
+
+  return (
+    <div 
+      className={clsx("relative overflow-hidden whitespace-nowrap", className)}
+      onMouseEnter={() => pauseOnHover && setIsPaused(true)}
+      onMouseLeave={() => pauseOnHover && setIsPaused(false)}
+    >
+      <div
+        ref={scrollRef}
+        className="inline-flex items-center gap-8 animate-scroll"
+        style={{
+          animationDirection: direction === "left" ? "normal" : "reverse",
+          animationDuration: `${40 / default_velocity}s`,
+          animationPlayState: isPaused ? 'paused' : 'running'
+        }}
+      >
+        {/* Repeat text multiple times for continuous effect */}
+        {Array.from({ length: 6 }).map((_, index) => (
+          <span key={index} className="flex-shrink-0">
+            {text}
+          </span>
+        ))}
+      </div>
+      
+      <style jsx>{`
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-100%);
+          }
+        }
+        
+        .animate-scroll {
+          animation: scroll linear infinite;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+// Original TextScroll component for slide-in animations
+const TextScroll = ({ 
+  children, 
+  className = "",
+  direction = "up", // "up", "down", "left", "right"
+  duration = 0.8,
+  delay = 0,
+  triggerOnce = true,
+  threshold = 0.1
+}) => {
+  const ref = useRef(null);
   const [isInView, setIsInView] = useState(false);
-  
+  const [hasAnimated, setHasAnimated] = useState(false);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsInView(entry.isIntersecting);
       },
       {
-        threshold: options.threshold || 0.1,
-        rootMargin: options.rootMargin || '0px 0px -10% 0px'
+        threshold: threshold,
+        rootMargin: '0px 0px -10% 0px'
       }
     );
     
@@ -25,23 +89,7 @@ const useInView = (ref, options = {}) => {
         observer.unobserve(ref.current);
       }
     };
-  }, [ref, options.threshold, options.rootMargin]);
-  
-  return isInView;
-};
-
-const TextScroll = ({ 
-  children, 
-  className = "",
-  direction = "up", // "up", "down", "left", "right"
-  duration = 0.8,
-  delay = 0,
-  triggerOnce = true,
-  threshold = 0.1
-}) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { threshold });
-  const [hasAnimated, setHasAnimated] = useState(false);
+  }, [threshold]);
 
   useEffect(() => {
     if (isInView && (!hasAnimated || !triggerOnce)) {
@@ -82,7 +130,7 @@ const TextScroll = ({
     >
       {children}
       
-      <style>{`
+      <style jsx>{`
         @keyframes slide-up-in {
           from {
             opacity: 0;
@@ -171,15 +219,6 @@ const TextScroll = ({
           }
         }
         
-        @keyframes scroll-text {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-100%);
-          }
-        }
-        
         .animate-slide-up-in {
           animation: slide-up-in ease-out forwards;
         }
@@ -211,52 +250,9 @@ const TextScroll = ({
         .animate-slide-right-out {
           animation: slide-right-out ease-out forwards;
         }
-        
-        .animate-scroll-text {
-          animation: scroll-text linear infinite;
-        }
       `}</style>
     </div>
   );
 };
 
-// Alternative implementation for continuous scrolling text
-const ScrollingText = ({ 
-  text, 
-  speed = 50, 
-  direction = "left",
-  className = "",
-  pauseOnHover = true
-}) => {
-  const [isPaused, setIsPaused] = useState(false);
-
-  return (
-    <div 
-      className={clsx("overflow-hidden whitespace-nowrap", className)}
-      onMouseEnter={() => pauseOnHover && setIsPaused(true)}
-      onMouseLeave={() => pauseOnHover && setIsPaused(false)}
-    >
-      <div
-        className="inline-block animate-scroll-text"
-        style={{
-          animationDirection: direction === "left" ? "normal" : "reverse",
-          animationDuration: `${speed}s`,
-          animationPlayState: isPaused ? 'paused' : 'running'
-        }}
-      >
-        <span className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          {text} • {text} • {text} • {text} • 
-        </span>
-      </div>
-      
-      <style>{`
-        .animate-scroll-text {
-          animation: scroll-text linear infinite;
-        }
-      `}</style>
-    </div>
-  );
-};
-
-export { ScrollingText };
 export default TextScroll;

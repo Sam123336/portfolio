@@ -10,7 +10,25 @@ const FlipLink = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const letters = children.split('');
+  // Handle both string and JSX children by extracting text content
+  const getTextContent = (node) => {
+    if (typeof node === 'string') {
+      return node;
+    }
+    if (typeof node === 'number') {
+      return node.toString();
+    }
+    if (React.isValidElement(node)) {
+      return getTextContent(node.props.children);
+    }
+    if (Array.isArray(node)) {
+      return node.map(getTextContent).join('');
+    }
+    return '';
+  };
+
+  const textContent = getTextContent(children);
+  const letters = textContent.split('');
 
   return (
     <a
