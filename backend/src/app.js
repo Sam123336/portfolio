@@ -30,15 +30,40 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // MongoDB connection with updated options to fix deprecation warnings
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+mongoose.connect(process.env.MONGODB_URI)
+.then(() => {
+  console.log('MongoDB connected successfully');
+  console.log('Database name:', mongoose.connection.name);
 })
-.then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
 
-// Set mongoose options to avoid deprecation warnings
+// Set mongoose options to avoid deprecation warnings and improve performance
 mongoose.set('strictQuery', false);
+
+// Additional mongoose configurations for better performance and error handling
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('MongoDB disconnected');
+});
+
+mongoose.connection.on('reconnected', () => {
+  console.log('MongoDB reconnected');
+});
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+  try {
+    await mongoose.connection.close();
+    console.log('MongoDB connection closed through app termination');
+    process.exit(0);
+  } catch (err) {
+    console.error('Error during graceful shutdown:', err);
+    process.exit(1);
+  }
+});
 
 // Routes
 app.use('/api', routes);

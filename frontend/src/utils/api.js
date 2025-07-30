@@ -44,9 +44,15 @@ api.interceptors.response.use(
   }
 );
 
-// Function to get all projects
+// Function to get all projects (default portfolio)
 export const getProjects = async () => {
     const response = await api.get(`/projects`);
+    return response.data;
+};
+
+// Function to get projects by user ID (for specific portfolios)
+export const getUserProjects = async (userId) => {
+    const response = await api.get(`/projects/user/${userId}`);
     return response.data;
 };
 
@@ -76,11 +82,42 @@ export const deleteProject = async (id) => {
     return response.data;
 };
 
+// Function to get user portfolio data
+export const getUserPortfolio = async (userId) => {
+    const response = await api.get(`/auth/portfolio/${userId}`);
+    return response.data;
+};
+
+// Function to update user portfolio data
+export const updateUserPortfolio = async (portfolioData) => {
+    const response = await api.put(`/auth/portfolio`, portfolioData);
+    return response.data;
+};
+
 // Function to log in a user
 export const loginUser = async (credentials) => {
     try {
         console.log('Making login request to:', `${API_BASE}/auth/login`);
-        const response = await api.post(`/auth/login`, credentials);
+        
+        // Prepare login data - support both email and username
+        const loginData = {
+            password: credentials.password
+        };
+        
+        // Check if the input looks like an email or username
+        const input = credentials.username || credentials.email;
+        if (input) {
+            // If it contains @, treat as email, otherwise as username
+            if (input.includes('@')) {
+                loginData.email = input;
+            } else {
+                loginData.username = input;
+            }
+        }
+        
+        console.log('Login data being sent:', { ...loginData, password: '***' });
+        
+        const response = await api.post(`/auth/login`, loginData);
         console.log('Login API response:', response.data);
         return response.data;
     } catch (error) {
@@ -95,9 +132,28 @@ export const registerUser = async (userData) => {
     return response.data;
 };
 
+// Function to register a new admin with portfolio
+export const registerAdmin = async (adminData) => {
+    try {
+        console.log('Making admin registration request to:', `${API_BASE}/auth/admin/register`);
+        const response = await api.post(`/auth/admin/register`, adminData);
+        console.log('Admin registration API response:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Admin registration API error:', error);
+        throw error;
+    }
+};
+
 // MUSIC ENDPOINTS
 export const getMusic = async () => {
   const response = await api.get('/music');
+  return response.data;
+};
+
+// Function to get music by user ID (for specific portfolios)
+export const getUserMusic = async (userId) => {
+  const response = await api.get(`/music/user/${userId}`);
   return response.data;
 };
 
@@ -130,6 +186,12 @@ export const deleteMusic = async (id) => {
 export const getImages = async () => {
   const response = await api.get('/images');
   return response.data.images; // Extract the images array from the response object
+};
+
+// Function to get images by user ID (for specific portfolios)
+export const getUserImages = async (userId) => {
+  const response = await api.get(`/images/user/${userId}`);
+  return response.data.images;
 };
 
 export const uploadImage = async (imageData) => {
@@ -167,8 +229,50 @@ export const getProfilePicture = async () => {
   return response.data;
 };
 
+// Function to get profile picture by user ID (for specific portfolios)
+export const getUserProfilePicture = async (userId) => {
+  const response = await api.get(`/images/profile/${userId}`);
+  return response.data;
+};
+
 export const deleteImage = async (id) => {
   await api.delete(`/images/${id}`);
+};
+
+// CV ENDPOINTS
+export const getCV = async (userId = null) => {
+  const url = userId ? `/cv/user/${userId}` : '/cv';
+  const response = await api.get(url);
+  return response.data;
+};
+
+export const uploadCV = async (cvData) => {
+  const uploadConfig = {
+    headers: { 'Content-Type': 'multipart/form-data' },
+    timeout: 120000, // 120 seconds for PDF uploads
+    onUploadProgress: (progressEvent) => {
+      const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+      console.log(`CV upload progress: ${percentCompleted}%`);
+    }
+  };
+  
+  const response = await api.post('/cv/upload', cvData, uploadConfig);
+  return response.data;
+};
+
+export const getAllCVs = async () => {
+  const response = await api.get('/cv/all');
+  return response.data;
+};
+
+export const setActiveCV = async (cvId) => {
+  const response = await api.put(`/cv/active/${cvId}`);
+  return response.data;
+};
+
+export const deleteCV = async (cvId) => {
+  const response = await api.delete(`/cv/${cvId}`);
+  return response.data;
 };
 
 // CONTACT ENDPOINT

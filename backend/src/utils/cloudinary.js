@@ -25,6 +25,34 @@ const uploadImage = async (filePath) => {
   }
 };
 
+// Upload from buffer (for multer)
+const uploadToCloudinary = async (buffer, options = {}) => {
+  try {
+    return new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        {
+          folder: options.folder || 'portfolio',
+          timeout: 60000,
+          resource_type: options.resource_type || 'auto',
+          ...options
+        },
+        (error, result) => {
+          if (error) {
+            console.error('Cloudinary upload error:', error);
+            reject(new Error('Error uploading to Cloudinary: ' + error.message));
+          } else {
+            resolve(result);
+          }
+        }
+      );
+      uploadStream.end(buffer);
+    });
+  } catch (error) {
+    console.error('Cloudinary upload error:', error);
+    throw new Error('Error uploading to Cloudinary: ' + error.message);
+  }
+};
+
 const deleteImage = async (publicId) => {
   try {
     console.log('Attempting to delete image with publicId:', publicId);
@@ -60,6 +88,9 @@ const deleteImage = async (publicId) => {
   }
 };
 
+// Alias for consistency
+const deleteFromCloudinary = deleteImage;
+
 // Additional utility function to check if image exists
 const checkImageExists = async (publicId) => {
   try {
@@ -73,4 +104,4 @@ const checkImageExists = async (publicId) => {
   }
 };
 
-export { uploadImage, deleteImage, checkImageExists, cloudinary };
+export { uploadImage, uploadToCloudinary, deleteImage, deleteFromCloudinary, checkImageExists, cloudinary };

@@ -5,11 +5,15 @@ import { AuthProvider } from './hooks/useAuth';
 import { MusicProvider } from './components/MusicProvider';
 
 import PortfolioViewer from './pages/PortfolioViewer';
+import UserPortfolioViewer from './pages/UserPortfolioViewer';
+import BrowsePortfolios from './pages/BrowsePortfolios';
 import Projects from './pages/Projects';
 import Images from './pages/Images';
 import Contact from './pages/Contact';
 import Skills from './pages/Skills';
+import CV from './pages/CV';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminRegister from './pages/AdminRegister';
 import Login from './pages/Login';
 import MusicConsentPopup from './components/MusicConsentPopup';
 
@@ -38,11 +42,15 @@ const App = () => {
               <main className="pt-16">
                 <Routes>
                   <Route path="/" element={<PortfolioViewer />} />
+                  <Route path="/portfolio/:userId" element={<UserPortfolioViewer />} />
+                  <Route path="/portfolios" element={<BrowsePortfolios />} />
+                  <Route path="/cv" element={<CV />} />
                   <Route path="/projects" element={<Projects />} />
                   <Route path="/images" element={<Images />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/skills" element={<Skills />} />
                   <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/admin/register" element={<AdminRegister />} />
                   <Route path="/login" element={<Login />} />
                 </Routes>
               </main>

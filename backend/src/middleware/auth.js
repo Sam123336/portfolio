@@ -75,4 +75,7 @@ const adminMiddleware = async (req, res, next) => {
     }
 };
 
-export { authMiddleware, adminMiddleware };
+// Alias for consistency with other parts of the codebase
+const authenticateToken = authMiddleware;
+
+export { authMiddleware, adminMiddleware, authenticateToken };

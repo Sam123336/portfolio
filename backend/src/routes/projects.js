@@ -1,32 +1,57 @@
 import express from 'express';
-const router = express.Router();
-import { Project } from '../models/index.js';
-import { adminMiddleware } from '../middleware/auth.js';
-// Import your existing uploader
-import { projectUpload } from '../utils/uploaders.js'; // Assume it's exported
+import { 
+  getProjects, 
+  getProjectsByUsername, 
+  getDefaultProjects, 
+  createProject, 
+  updateProject, 
+  deleteProject,
+  getProjectById 
+} from '../controllers/projectController.js';
+import { authMiddleware } from '../middleware/auth.js';
+import { projectUpload } from '../utils/uploaders.js';
 
+const router = express.Router();
+
+// Public routes for portfolio viewing
+router.get('/default', getDefaultProjects); // Get default portfolio projects
+router.get('/user/:username', getProjectsByUsername); // Get projects by username
+router.get('/single/:id', getProjectById); // Get single project by ID
+
+// Authenticated routes for portfolio management
+router.get('/', getProjects); // Get user's own projects (or default if not authenticated)
+router.post('/create', authMiddleware, projectUpload.single('thumbnail'), createProject);
+router.put('/:id', authMiddleware, updateProject);
+router.delete('/:id', authMiddleware, deleteProject);
+
+// Legacy route with file upload (enhanced for multi-portfolio)
 router.post(
-  '/create',
-  adminMiddleware,
-  projectUpload.single('thumbnail'), // Uploads 'thumbnail' field
+  '/create-with-upload',
+  authMiddleware,
+  projectUpload.single('thumbnail'),
   async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ message: 'Thumbnail is required' });
       }
 
-      const { title, description, skills, liveLink, githubLink } = req.body;
+      const { title, description, skills, liveLink, githubLink, featured, order } = req.body;
+      const userId = req.user.userId || req.user.id;
 
-      const newProject = new Project({
+      const projectData = {
         title,
         description,
         thumbnail: req.file.path, // Cloudinary URL
         skills: skills ? skills.split(',').map(s => s.trim()) : [],
         liveLink,
         githubLink,
-        createdBy: req.user._id,
-      });
+        userId,
+        featured: featured === 'true' || featured === true,
+        order: parseInt(order) || 0
+      };
 
+      const { Project } = await import('../models/index.js');
+      const newProject = new Project(projectData);
       await newProject.save();
 
       res.status(201).json({
@@ -34,60 +59,64 @@ router.post(
         project: newProject,
       });
     } catch (error) {
-      console.error('Error creating project:', error);
+      console.error('Error creating project with upload:', error);
       res.status(500).json({ message: 'Failed to create project' });
     }
   }
 );
 
-// GET all projects
-router.get('/', async (req, res) => {
-  try {
-    const projects = await Project.find().populate('createdBy', 'username email').sort({ createdAt: -1 });
-    res.status(200).json(projects);
-  } catch (error) {
-    console.error('Error fetching projects:', error);
-    res.status(500).json({ message: 'Failed to fetch projects' });
-  }
-});
+// Update project with thumbnail upload
+router.put(
+  '/update-with-upload/:id',
+  authMiddleware,
+  projectUpload.single('thumbnail'),
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { title, description, skills, liveLink, githubLink, featured, order } = req.body;
+      const userId = req.user.userId || req.user.id;
 
-// PUT update project
-router.put('/:id', adminMiddleware, async (req, res) => {
-  try {
-    const { title, description, skills, liveLink, githubLink } = req.body;
-    const updatedProject = await Project.findByIdAndUpdate(
-      req.params.id,
-      {
+      const { Project } = await import('../models/index.js');
+
+      // Find project and check ownership
+      const existingProject = await Project.findById(id);
+      if (!existingProject) {
+        return res.status(404).json({ message: 'Project not found' });
+      }
+
+      if (existingProject.userId.toString() !== userId.toString()) {
+        return res.status(403).json({ message: 'Not authorized to update this project' });
+      }
+
+      const updateData = {
         title,
         description,
         skills: skills ? skills.split(',').map(s => s.trim()) : [],
         liveLink,
         githubLink,
-      },
-      { new: true }
-    );
-    if (!updatedProject) {
-      return res.status(404).json({ message: 'Project not found' });
-    }
-    res.status(200).json({ message: 'Project updated successfully', project: updatedProject });
-  } catch (error) {
-    console.error('Error updating project:', error);
-    res.status(500).json({ message: 'Failed to update project' });
-  }
-});
+        featured: featured === 'true' || featured === true,
+        order: parseInt(order) || 0
+      };
 
-// DELETE project
-router.delete('/:id', adminMiddleware, async (req, res) => {
-  try {
-    const deletedProject = await Project.findByIdAndDelete(req.params.id);
-    if (!deletedProject) {
-      return res.status(404).json({ message: 'Project not found' });
+      // Add new thumbnail if uploaded
+      if (req.file) {
+        updateData.thumbnail = req.file.path;
+      }
+
+      const updatedProject = await Project.findByIdAndUpdate(id, updateData, { 
+        new: true, 
+        runValidators: true 
+      });
+
+      res.status(200).json({ 
+        message: 'Project updated successfully', 
+        project: updatedProject 
+      });
+    } catch (error) {
+      console.error('Error updating project with upload:', error);
+      res.status(500).json({ message: 'Failed to update project' });
     }
-    res.status(200).json({ message: 'Project deleted successfully' });
-  } catch (error) {
-    console.error('Error deleting project:', error);
-    res.status(500).json({ message: 'Failed to delete project' });
   }
-});
+);
 
 export default router;

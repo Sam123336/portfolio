@@ -1,8 +1,9 @@
-import { createProject, getProjects, updateProject, deleteProject } from '../controllers/projectController';
-import { registerUser, loginUser } from '../controllers/authController';
-import { uploadImage, getImages } from '../controllers/imageController';
-import { uploadMusic, getMusic } from '../controllers/musicController';
-import { contactForm } from '../controllers/contactController';
+import { createProject, getProjects, updateProject, deleteProject } from './projectController.js';
+import { registerUser, loginUser } from './authController.js';
+import { uploadImage, getImages } from './imageController.js';
+import { uploadMusic, getMusic } from './musicController.js';
+import { contactForm } from './contactController.js';
+import { getCV, createOrUpdateCV, initializeCV } from './cvController.js';
 
 export {
   createProject,
@@ -16,4 +17,7 @@ export {
   uploadMusic,
   getMusic,
   contactForm,
+  getCV,
+  createOrUpdateCV,
+  initializeCV,
 };

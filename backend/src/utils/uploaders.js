@@ -31,6 +31,16 @@ const musicStorage = new CloudinaryStorage({
   },
 });
 
+// Configure Cloudinary storage for CV PDFs
+const cvStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'portfolio/cv',
+    allowed_formats: ['pdf'],
+    resource_type: 'raw', // Use 'raw' for PDF files in Cloudinary
+  },
+});
+
 // Create multer upload instances
 export const projectUpload = multer({ 
   storage: projectStorage,
@@ -50,5 +60,12 @@ export const musicUpload = multer({
   storage: musicStorage,
   limits: {
     fileSize: 50 * 1024 * 1024, // 50MB limit
+  }
+});
+
+export const cvUpload = multer({ 
+  storage: cvStorage,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB limit for PDFs
   }
 });

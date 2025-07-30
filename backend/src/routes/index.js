@@ -6,6 +6,7 @@ import musicRoutes from './music.js';
 import contactRoutes from './contact.js';
 import skillRoutes from './skills.js';
 import analyticsRoutes from './analytics.js';
+import cvRoutes from './cv.js';
 
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.use('/music', musicRoutes);
 router.use('/contact', contactRoutes);
 router.use('/skills', skillRoutes);
 router.use('/analytics', analyticsRoutes);
+router.use('/cv', cvRoutes);
 
 export default router;
